@@ -1,0 +1,27 @@
+{
+  "name": "blog-it",
+  "version": "1.0.0",
+  "description": "Blog Post Website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahmoudsalah296/Blog-it.git"
+  },
+  "author": "Mahmoud, Menna, Hamza, Ahmed",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahmoudsalah296/Blog-it/issues"
+  },
+  "homepage": "https://github.com/mahmoudsalah296/Blog-it#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0"
+  }
+}
