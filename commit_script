@@ -1,0 +1,11 @@
+#!/bin/bash
+read -p "Enter files to add: " files_to_add
+read -p "Enter commit message: " commit_message
+if [ -z "$commit_message" ]; then
+  echo "Commit message cannot be empty."
+  exit 1
+fi
+git add $files_to_add
+git status
+git commit -m "$commit_message"
+echo "Changes committed with message: $commit_message"
