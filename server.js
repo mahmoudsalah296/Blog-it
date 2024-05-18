@@ -10,9 +10,9 @@ const PORT = 5000;
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.json({message: 'hello world'}).status(200);
-});
+// app.get('/', (req, res) => {
+//     res.json({message: 'hello world'}).status(200);
+// });
 
 app.use('/users', userRoute);
 app.use('/posts', postRoute);

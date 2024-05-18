@@ -9,7 +9,7 @@ route.post('/', async (req, res) => {
         const userData = req.body;
         const user = new User(userData);
         await user.save()
-        res.status(201).json({message: 'user created successefuly'});
+        res.status(201).json({message: 'user created successfully '});
     }catch (error){
         res.status(400).json(error);
     }
@@ -25,6 +25,18 @@ route.get('/', async (req, res) => {
     }
 });
 
+// update user
+route.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const updateData = req.body;
+    // console.log(updateData);// {}
+    try{
+        const userUpdate = await User.findByIdAndUpdate(id, {$set: updateData}, {new: true});
+        res.status(200).json({message: 'user updated successfully'});
+    }catch (error){
+        res.status(400).json(error);
+    }
+});
 
 
 module.exports = route;
