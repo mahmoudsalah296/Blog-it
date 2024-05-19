@@ -23,9 +23,24 @@ route.post('/', async (req, res) => {
         await post.save();
         res.status(200).json({message: 'post created successfully'});
     } catch (error){
-        res.status(400).json({error});
+        res.status(400).json({message: 'db.Something goes wrong'});
     }
 });
 
+// update post
+route.put('/:id', async (req, res) =>{
+    const dataUpdate = req.body
+    const id = req.params.id;
+    try{
+        const postExists = await Post.findById(id);
+        if(!postExists){
+            return res.status(400).json({message: 'post doesn\'t exists'});
+        }
+        await Post.findByIdAndUpdate(id, {$set: dataUpdate}, {new: true});
+        return res.status(200).json({message: 'post updated successfully'});
+    } catch (error){
+        res.status(400).json({message: 'db.Something goes wrong'});
+    }
+});
 
 module.exports = route;
