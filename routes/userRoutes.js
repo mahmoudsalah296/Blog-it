@@ -29,8 +29,11 @@ route.get('/', async (req, res) => {
 route.put('/:id', async (req, res) => {
     const { id } = req.params;
     const updateData = req.body;
-    // console.log(updateData);// {}
     try{
+        const userExists = await User.findById(id);
+        if (!userExists){
+            return res.status(400).json({message: 'user not found'});
+        }
         const userUpdate = await User.findByIdAndUpdate(id, {$set: updateData}, {new: true});
         res.status(200).json({message: 'user updated successfully'});
     }catch (error){
@@ -38,5 +41,18 @@ route.put('/:id', async (req, res) => {
     }
 });
 
+// return user by id
+route.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    try{
+        const userExists = await User.findById(id).select('-password');
+        if (!userExists){
+            return res.status(400).json({message: 'user not found'});
+        }
+        res.status(200).json({user: userExists});
+    }catch (error){
+        res.status(400).json(error);
+    }
+});
 
 module.exports = route;
