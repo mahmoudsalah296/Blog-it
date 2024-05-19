@@ -55,4 +55,18 @@ route.get('/:id', async (req, res) => {
     }
 });
 
+route.delete('/:id', async (req, res) => {
+    const id = req.params.id;
+    try{
+        const userExists = await User.findById(id).select('-password');
+        if (!userExists){
+            return res.status(400).json({message: 'user not found'});
+        }
+        await User.findByIdAndDelete(id);
+        res.status(200).json({message: 'user deleted successfully'})
+    }catch (error){
+        res.status(400).json({error});
+    }
+});
+
 module.exports = route;
