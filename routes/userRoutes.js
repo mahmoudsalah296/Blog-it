@@ -55,6 +55,7 @@ route.get('/:id', async (req, res) => {
     }
 });
 
+// delete user
 route.delete('/:id', async (req, res) => {
     const id = req.params.id;
     try{
