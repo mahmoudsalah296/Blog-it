@@ -1,31 +1,17 @@
 const express = require('express');
-const route = express.Router();
-const User = require('../models/userModel');
-// const sha1 = require('sha1');
 
-// create user
-route.post('/', async (req, res) => {
-    try{
-        const userData = req.body;
-        const user = new User(userData);
-        await user.save()
-        res.status(201).json({message: 'user created successfully '});
-    }catch (error){
-        res.status(400).json(error);
-    }
-});
+const usersController = require("../controllers/usersController");
+const verifyJWT = require("../middleware/verifyJWT");
+const User = require('../models/userModel');
+
+const route = express.Router();
 
 // get users for admin
-route.get('/', async (req, res) => {
-    try{
-        const users = await User.find().select('-password');
-        res.status(200).json(users);
-    }catch (error){
-        res.status(400).json({message: 'db.Something goes wrong'});
-    }
-});
+route.use(verifyJWT);
+route.route("/").get(usersController.getAllUsers);
 
 // update user
+route.use(verifyJWT);
 route.put('/:id', async (req, res) => {
     const { id } = req.params;
     const updateData = req.body;
@@ -42,6 +28,7 @@ route.put('/:id', async (req, res) => {
 });
 
 // return user by id
+route.use(verifyJWT);
 route.get('/:id', async (req, res) => {
     const { id } = req.params;
     try{
@@ -56,6 +43,7 @@ route.get('/:id', async (req, res) => {
 });
 
 // delete user
+route.use(verifyJWT);
 route.delete('/:id', async (req, res) => {
     const id = req.params.id;
     try{
