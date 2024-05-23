@@ -45,9 +45,9 @@ const register = async (req, res) => {
     }, process.env.REFRESH_TOKEN_SECRET, {expiresIn:"7d"});
 
     res.cookie("jwt", refreshToken, {
-        httpOnly:true,
-        secure: true,
-        sameSite: "None",
+        // httpOnly:true,
+        // secure: true,
+        // sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -89,14 +89,14 @@ const login = async (req, res) => {
     }, process.env.REFRESH_TOKEN_SECRET, {expiresIn:"7d"});
 
     res.cookie("jwt", refreshToken, {
-        httpOnly:true,
-        secure: true,
-        sameSite: "None",
+		// httpOnly:true,
+        // secure: true,
+        // sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     res.json({
-        accessToken, 
+        accessToken,
         email: foundUser.email
     });
 }
@@ -139,9 +139,9 @@ const logout = (req, res) => {
     }
 
     res.clearCookie('jwt', {
-        httpOnly: true,
-        sameSite: "None",
-        secure: true
+        // httpOnly: true,
+        // sameSite: "None",
+        // secure: true
     });
 
     res.json({message: "cookie cleared"})
