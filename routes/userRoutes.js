@@ -3,11 +3,13 @@ const express = require('express');
 const usersController = require("../controllers/usersController");
 const verifyJWT = require("../middleware/verifyJWT");
 const User = require('../models/userModel');
+const isAdmin = require('../middleware/isAdmin');
 
 const route = express.Router();
 
 // get users for admin
 route.use(verifyJWT);
+route.use(isAdmin);
 route.route("/").get(usersController.getAllUsers);
 
 // update user
@@ -21,6 +23,9 @@ route.put('/:id', async (req, res) => {
             return res.status(400).json({message: 'user not found'});
         }
         const userUpdate = await User.findByIdAndUpdate(id, {$set: updateData}, {new: true});
+        if (!userUpdate) {
+            return res.status(400).json({ message: 'Update failed' });
+        }
         res.status(200).json({message: 'user updated successfully'});
     }catch (error){
         res.status(400).json({message: 'db.Something goes wrong'});

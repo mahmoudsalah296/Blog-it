@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
   profilePicture: { type: String, required: false, default: '' },
   bio: { type: String, required: false, default: '' },
   joinedAt: { type: Date, default: Date.now },
+  isAdmin: {type: Boolean, default: false},
 });
 
 const User = mongoose.model('User', UserSchema, 'users');
