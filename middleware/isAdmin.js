@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-// const User = require('../models/userModel');
 
 const isAdmin = (req, res, next) => {
     const authHeader = req.headers.authorization || req.headers.Authorization;
@@ -14,7 +13,6 @@ const isAdmin = (req, res, next) => {
         if (err) {
             return res.status(403).json({message: "Forbidden"})
         }
-        // const admin = await User.findById(decoded.UserInfo.id);
         if (!decoded.UserInfo.isAdmin) {
             return res.status(401).json({message: "unauthorized"})
         }
