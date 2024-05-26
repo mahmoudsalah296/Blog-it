@@ -106,6 +106,21 @@ const login = async (req, res) => {
     });
 }
 
+const update = async (req, res) => {
+    const id  = req.user;
+    const updateData = req.body;
+    try{
+        const userExists = await User.findById(id);
+        if (!userExists){
+            return res.status(400).json({message: 'user not found'});
+        }
+        const userUpdate = await User.findByIdAndUpdate(id, {$set: updateData}, {new: true});
+        res.status(200).json({message: 'user updated successfully'});
+    }catch (error){
+        res.status(400).json({message: 'Something went wrong'});
+    }
+}
+
 const refresh = async (req, res) => {
     const cookies = req.cookies;
 
@@ -156,6 +171,7 @@ const logout = (req, res) => {
 module.exports = {
     register,
     login,
+    update,
     refresh,
     logout
 }
