@@ -9,7 +9,7 @@ const register = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    const profilePicture = req.body.profilePicture || null;
+    const image = req.file ? req.file.filename : 'defaultImage.jpg';
     const bio = req.body.bio || null;
 
 
@@ -29,7 +29,7 @@ const register = async (req, res) => {
         username,
         email,
         password: hashedPassword,
-        profilePicture: profilePicture ? profilePicture : null,
+        profilePicture: image,
         bio: bio? bio : null
     });
 
