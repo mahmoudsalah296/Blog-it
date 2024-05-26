@@ -1,16 +1,18 @@
 const Post = require('../models/postModel')
 
 const createPost = async (req, res) => {
-    const postData = req.body ? req.body : null;
-    if(!postData){
+    const { title, body, author , categories} = req.body;
+    const image = req.file ? req.file.filename : 'defaultImage.jpg';
+    if(!title || !body || !author){
         res.status(400).json({message: 'Something goes wrong'})
     }
     try{
-        const post = new Post(postData);
+        const post = new Post({ title, body, author, image , categories});
+        // const post = new Post(postData);
         await post.save();
         res.status(200).json({message: 'post created successfully'});
     } catch (error){
-        res.status(400).json({message: 'db.Something goes wrong'});
+        res.status(400).json({message: `db.Something goes wrong ${error}`});
     }
 };
 

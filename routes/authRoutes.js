@@ -1,12 +1,13 @@
 const express = require('express');
 const path = require('path');
+const upload = require('../config/uploadImage');
 
 const authController = require("../controllers/authController")
 const verifyUserID = require("../middleware/verifyUserID");
 
 const router = express.Router();
 
-router.route("/register").post(authController.register);
+router.route("/register").post(upload.single('image'), authController.register);
 router.route("/login").post(authController.login);
 
 router.use(verifyUserID);
