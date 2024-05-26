@@ -2,14 +2,14 @@ const express = require('express');
 const path = require('path');
 
 const authController = require("../controllers/authController")
-const verifyJWT = require("../middleware/verifyJWT");
+const verifyUserID = require("../middleware/verifyUserID");
 
 const router = express.Router();
 
 router.route("/register").post(authController.register);
 router.route("/login").post(authController.login);
 
-router.use(verifyJWT);
+router.use(verifyUserID);
 router.route("/update/me").put(authController.update);
 
 router.route("/refresh").get(authController.refresh);
