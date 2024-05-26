@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
 const User = require("../models/userModel");
+const isAdmin = require('../middleware/isAdmin');
 
 const register = async (req, res) => {
     const username = req.body.username;
@@ -34,20 +35,22 @@ const register = async (req, res) => {
 
     const accessToken = jwt.sign({
         UserInfo: {
-            id: user._id
+            id: user._id,
+            isAdmin: user.isAdmin ? user.isAdmin : false, // added 
         }
     }, process.env.ACCESS_TOKEN_SECRET, {expiresIn:"15m"});
 
     const refreshToken = jwt.sign({
         UserInfo: {
-            id: user._id
+            id: user._id,
+            isAdmin: user.isAdmin ? user.isAdmin : false, // added 
         }
     }, process.env.REFRESH_TOKEN_SECRET, {expiresIn:"7d"});
 
     res.cookie("jwt", refreshToken, {
-        httpOnly:true,
-        secure: true,
-        sameSite: "None",
+        // httpOnly:true,
+        // secure: true,
+        // sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
@@ -78,25 +81,27 @@ const login = async (req, res) => {
 
     const accessToken = jwt.sign({
         UserInfo: {
-            id: foundUser._id
+            id: foundUser._id,
+            isAdmin: foundUser.isAdmin ? foundUser.isAdmin : false, // added 
         }
     }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});
 
     const refreshToken = jwt.sign({
         UserInfo: {
-            id: foundUser._id
+            id: foundUser._id,
+            isAdmin: foundUser.isAdmin ? foundUser.isAdmin : false, // added 
         }
     }, process.env.REFRESH_TOKEN_SECRET, {expiresIn:"7d"});
 
     res.cookie("jwt", refreshToken, {
-        httpOnly:true,
-        secure: true,
-        sameSite: "None",
+		// httpOnly:true,
+        // secure: true,
+        // sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
     res.json({
-        accessToken, 
+        accessToken,
         email: foundUser.email
     });
 }
@@ -138,7 +143,8 @@ const refresh = async (req, res) => {
 
         const accessToken = jwt.sign({
             UserInfo: {
-                id: foundUser._id
+                id: foundUser._id,
+                isAdmin: foundUser.isAdmin ? foundUser.isAdmin : false, // added 
             }
         }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});
 
@@ -154,9 +160,9 @@ const logout = (req, res) => {
     }
 
     res.clearCookie('jwt', {
-        httpOnly: true,
-        sameSite: "None",
-        secure: true
+        // httpOnly: true,
+        // sameSite: "None",
+        // secure: true
     });
 
     res.json({message: "cookie cleared"})
