@@ -57,7 +57,8 @@ const register = async (req, res) => {
     res.json({
         accessToken, 
         email: user.email,
-        username: user.username
+        username: user.username,
+		isAdmin: user.isAdmin ? user.isAdmin : false,
     });
 }
 
@@ -99,10 +100,10 @@ const login = async (req, res) => {
         // sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000
     });
-
     res.json({
         accessToken,
-        email: foundUser.email
+        email: foundUser.email,
+		isAdmin: foundUser.isAdmin ? foundUser.isAdmin : false,
     });
 }
 
