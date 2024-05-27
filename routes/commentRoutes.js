@@ -10,11 +10,14 @@ route.route('/:id').get(commentController.getCommentById);
 // create a comment 
 route.route('/').post(commentController.createComment);
 
-// update category
-route.route('/:id').post(commentController.updateCommentById);
+// update comment
+route.route('/:id').put(commentController.updateCommentById);
 
-// delete category
+// delete comment
 route.route('/:id').delete(commentController.deleteCommentsById);
+
+// get comment by post
+route.route('/post/:id').get(commentController.getCommentByPost);
 
 
 module.exports = route;

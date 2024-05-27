@@ -70,11 +70,25 @@ const deletePostById = async (req, res) => {
     }
 };
 
+const getPostByCategory = async (req, res) => {
+    const id = req.params.id
+    try{
+        const posts = await Post.find({categories: id});
+        if (!posts){
+            return res.status(400).json({message: 'posts not found'});
+        }
+        res.status(200).json({posts});
+    }catch (error){
+        res.status(400).json({error});
+    }
+};
+
 
 module.exports = {
     createPost,
     getAllPosts,
     getPostById,
     deletePostById,
-    updatePostById
+    updatePostById,
+    getPostByCategory
 };

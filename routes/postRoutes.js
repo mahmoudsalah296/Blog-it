@@ -20,5 +20,7 @@ route.route('/:id').put(postController.updatePostById);
 // delete post
 route.route('/:id').delete(postController.deletePostById);
 
+// get  posts by category
+route.route('/category/:id').get(postController.getPostByCategory);
 
 module.exports = route;
