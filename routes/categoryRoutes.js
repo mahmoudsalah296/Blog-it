@@ -14,7 +14,7 @@ route.route('/').post(categoryController.createCategory);
 
 
 // update category
-route.route('/:id').post(categoryController.updateCategoryById);
+route.route('/:id').put(categoryController.updateCategoryById);
 
 
 // delete category
