@@ -13,6 +13,9 @@ router.route("/login").post(authController.login);
 router.use(verifyUserID);
 router.route("/update/me").put(authController.update);
 
+router.use(verifyUserID);
+router.route("/delete/me").delete(authController.deleteProfile);
+
 router.route("/refresh").get(authController.refresh);
 router.route("/logout").post(authController.logout);
 

@@ -1,8 +1,10 @@
 const express = require('express');
-const route = express.Router();
-const Post = require('../models/postModel');
+
 const postController = require('../controllers/postController');
 const upload = require('../config/uploadImage');
+const verifyUserID = require("../middleware/verifyUserID");
+
+const route = express.Router();
 
 // get all posts
 route.route('/').get(postController.getAllPosts);
@@ -12,13 +14,16 @@ route.route('/:id').get(postController.getPostById);
 
 
 // create a post
-route.route('/').post(upload.single('image'), postController.createPost);
+route.use(verifyUserID);
+route.route('/create').post(upload.single('image'), postController.createPost);
 
 // update post
-route.route('/:id').put(postController.updatePostById);
+route.use(verifyUserID);
+route.route('/update/:id').put(postController.updatePostById);
 
 // delete post
-route.route('/:id').delete(postController.deletePostById);
+route.use(verifyUserID);
+route.route('/delete/:id').delete(postController.deletePostById);
 
 // get  posts by category
 route.route('/category/:id').get(postController.getPostByCategory);

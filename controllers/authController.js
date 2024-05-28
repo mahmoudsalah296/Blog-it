@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 
 const User = require("../models/userModel");
-const isAdmin = require('../middleware/isAdmin');
 
 const register = async (req, res) => {
     const username = req.body.username;
@@ -122,6 +121,20 @@ const update = async (req, res) => {
     }
 }
 
+const deleteProfile = async (req, res) => {
+    const id = req.user;
+    try{
+        const userExists = await User.findById(id).select('-password');
+        if (!userExists){
+            return res.status(400).json({message: 'user not found'});
+        }
+        await User.findByIdAndDelete(id);
+        res.status(200).json({message: 'user deleted successfully'})
+    }catch (error){
+        res.status(400).json({error});
+    }
+}
+
 const refresh = async (req, res) => {
     const cookies = req.cookies;
 
@@ -173,6 +186,7 @@ module.exports = {
     register,
     login,
     update,
+    deleteProfile,
     refresh,
     logout
 }
