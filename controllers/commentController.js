@@ -27,17 +27,18 @@ const getCommentById = async (req, res) => {
 
 
 const createComment = async (req, res) => {
-    const commentData = req.body ? req.body : null;
-    if(!commentData){
+    const { body, post } = req.body;
+    const author = req.user;
+    if(!body || !post) {
         res.status(400).json({message: 'Something goes wrong'})
     }
     try{
-        const comment = new Comment(commentData);
+        const comment = new Comment({body, author, post});
         await comment.save();
         await Post.findByIdAndUpdate(comment.post, {$push: {comments: comment._id}}, {new: true});
         res.status(200).json({message: 'comment added successfully'});
     } catch (error){
-        res.status(400).json({message: 'db.Something goes wrong'});
+        res.status(400).json({message: 'Something went wrong'});
     }
 };
 
@@ -50,8 +51,13 @@ const updateCommentById = async (req, res) =>{
         if(!commentExists){
             return res.status(400).json({message: 'comment doesn\'t exists'});
         }
-        await Comment.findByIdAndUpdate(id, {$set: dataUpdate}, {new: true});
-        return res.status(200).json({message: 'comment updated successfully'});
+
+        if (commentExists.author.toString() === req.user) {
+            await Comment.findByIdAndUpdate(id, {$set: dataUpdate}, {new: true});
+            return res.status(200).json({message: 'comment updated successfully'});
+        } else {
+            return res.status(401).json({message: "Unauthorized"});
+        }
     } catch (error){
         res.status(400).json({message: 'db.Something goes wrong'});
     }
@@ -65,8 +71,13 @@ const deleteCommentsById = async (req, res) => {
         if(!comment){
             return res.status(400).json({message: 'comment doesn\'t exists'});
         }
-        await Comment.findByIdAndDelete(id);
-        res.status(200).json({message: 'comment deleted successfully'})
+
+        if (comment.author.toString() === req.user) {
+            await Comment.findByIdAndDelete(id);
+            res.status(200).json({message: 'comment deleted successfully'})
+        } else {
+            return res.status(401).json({message: "Unauthorized"});
+        }
     }catch (error){
         res.status(400).json({message: 'db.Something goes wrong'});
     }

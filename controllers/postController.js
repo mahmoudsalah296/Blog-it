@@ -1,10 +1,11 @@
 const Post = require('../models/postModel')
 
 const createPost = async (req, res) => {
-    const { title, body, author , categories} = req.body;
+    const { title, body, categories} = req.body;
+    const author = req.user;
     const image = req.file ? req.file.filename : 'defaultImage.jpg';
-    if(!title || !body || !author){
-        res.status(400).json({message: 'Something goes wrong'})
+    if(!title || !body){
+        res.status(400).json({message: 'Something went wrong'})
     }
     try{
         const post = new Post({ title, body, author, image , categories});
@@ -12,7 +13,7 @@ const createPost = async (req, res) => {
         await post.save();
         res.status(200).json({message: 'post created successfully'});
     } catch (error){
-        res.status(400).json({message: `db.Something goes wrong ${error}`});
+        res.status(400).json({message: 'Something wentwrong'});
     }
 };
 
@@ -48,10 +49,14 @@ const updatePostById = async (req, res) =>{
         if(!postExists){
             return res.status(400).json({message: 'post doesn\'t exists'});
         }
-        await Post.findByIdAndUpdate(id, {$set: dataUpdate}, {new: true}); // be aware of update all , comments will be one comment 
-        return res.status(200).json({message: 'post updated successfully'});
+        if (postExists.author.toString() === req.user) {
+            await Post.findByIdAndUpdate(id, {$set: dataUpdate}, {new: true}); // be aware of update all , comments will be one comment 
+            return res.status(200).json({message: 'post updated successfully'});
+        } else {
+            return res.status(401).json({message: "Unauthorized"});
+        }
     } catch (error){
-        res.status(400).json({message: 'db.Something goes wrong'});
+        res.status(400).json({message: `Something went wrong ${error}`});
     }
 };
 
@@ -63,10 +68,16 @@ const deletePostById = async (req, res) => {
         if(!post){
             return res.status(400).json({message: 'post doesn\'t exists'});
         }
-        await Post.findByIdAndDelete(id);
-        res.status(200).json({message: 'post deleted successfully'})
+
+        if (post.author.toString() === req.user) {
+            await Post.findByIdAndDelete(id);
+            return res.status(200).json({message: 'post deleted successfully'})
+        } else {
+            return res.status(401).json({message: "Unauthorized"});
+        }
+        
     }catch (error){
-        res.status(400).json({message: 'db.Something goes wrong'});
+        res.status(400).json({message: 'Something went wrong'});
     }
 };
 

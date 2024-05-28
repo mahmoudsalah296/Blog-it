@@ -13,6 +13,9 @@ const isAdmin = (req, res, next) => {
         if (err) {
             return res.status(403).json({message: "Forbidden"})
         }
+
+        req.user = {id: decoded.UserInfo.id, isAdmin: decoded.UserInfo.isAdmin};
+        
         if (!decoded.UserInfo.isAdmin) {
             return res.status(401).json({message: "unauthorized"})
         }
