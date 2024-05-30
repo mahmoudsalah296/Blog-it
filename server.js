@@ -1,4 +1,4 @@
-require("dotenv").config();
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 
 const connectDB = require('./config/dbConn');
 const corsOptions = require('./config/corsOptions');
+const { swaggerUi, swaggerSpec } = require('./swagger');
 
 const authRoute = require('./routes/authRoutes');
 const userRoute = require('./routes/userRoutes');
@@ -24,24 +25,23 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/uploads')));
 
+// Serve Swagger docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use('/auth', authRoute);
 app.use('/users', userRoute);
 app.use('/posts', postRoute);
 app.use('/comments', commentRoute);
 app.use('/categories', categoryRoute);
 
-// app.get('/upload', (req, res) => {
-//     res.sendFile(path.join(__dirname, '/testUploadPage.html'));
-// });
+mongoose.connection.once('open', () => {
+  console.log('connected to the mongodb');
 
-mongoose.connection.once("open", () => {
-    console.log('connected to the mongodb');
-
-    app.listen(PORT, () => {
-        console.log('server running on port ', PORT);
-    }); 
+  app.listen(PORT, () => {
+    console.log('server running on port ', PORT);
+  });
 });
 
 mongoose.connection.on('error', (err) => {
-    console.log(err);
-})
+  console.log(err);
+});

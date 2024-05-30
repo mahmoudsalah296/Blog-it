@@ -6,7 +6,6 @@ const postSchema = new mongoose.Schema({
   body: { type: String, required: true },
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
-  //createdAt: { type: Date, default: Date.now },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   image: {type: String, require: false, default: "defaultImage.jpg"},
   fileUrl: { type: String, required: false },
