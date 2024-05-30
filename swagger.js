@@ -7,7 +7,7 @@ const swaggerDefinition = {
   info: {
     title: 'API Documentation',
     version: '1.0.0',
-    description: 'API documentation for your project',
+    description: 'API documentation for Blog-it web application',
   },
   servers: [
     {
