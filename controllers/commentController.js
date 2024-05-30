@@ -90,7 +90,7 @@ const getCommentByPost = async (req, res) => {
         const allComments = await Comment.find({post: id});
 		const comments = allComments.map(async (comment )=> 
 			{
-				const author = await User.findById(comment.author).username,
+				const author = await User.findById(comment.author).username;
 				return {
 					author: author,
 					body: comment.body,
