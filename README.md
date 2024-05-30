@@ -48,6 +48,7 @@ You can use a tool like Postman to test the application's APIs. The API document
 * Node.js: JavaScript runtime environment for server-side development.
 * Express.js: Web framework for building web applications and APIs in Node.js.
 * JWT (JSON Web Token): A secure way to represent claims (like user information) between different parts of an application.
+![MERN Diagram](uploads/mern_diagram.webp)
 
 ## Contributing
 Contributions are welcome! If you'd like to contribute to Blog-it, please follow these steps:
