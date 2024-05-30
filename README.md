@@ -43,6 +43,9 @@ You can use a tool like Postman to test the application's APIs. The API document
 
 **Note:** While API documentation is still under development, you can leverage both methods to explore and test the application's functionalities.
 
+**3. API Documentation:**
+
+API documentation for this project was built using Swagger UI and can be found at the following link: [Swagger API Docs](https://blog-it-zjku.onrender.com/api-docs/).
 
 ## Technologies Used:
 * Node.js: JavaScript runtime environment for server-side development.
