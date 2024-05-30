@@ -8,7 +8,8 @@ const postSchema = new mongoose.Schema({
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
   //createdAt: { type: Date, default: Date.now },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
-  image: {type: String, require: false, default: "defaultImage.jpg"}
+  image: {type: String, require: false, default: "defaultImage.jpg"},
+  fileUrl: { type: String, required: false },
 }, { timestamps: true });
 
 const Post = mongoose.model('Post', postSchema, 'post');
