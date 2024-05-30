@@ -1,4 +1,5 @@
 const Comment = require('../models/commentModel');
+const User = require('../models/userModel');
 const Post = require('../models/postModel');
 
 
@@ -86,11 +87,23 @@ const deleteCommentsById = async (req, res) => {
 const getCommentByPost = async (req, res) => {
     const id = req.params.id
     try{
-        const comments = await Comment.find({post: id});
-        if (!comments){
+        const allComments = await Comment.find({post: id});
+		const comments = allComments.map(async (comment )=> 
+			{
+				const author = await User.findById(comment.author).username,
+				return {
+					author: author,
+					body: comment.body,
+					createdAt: comment.createdAt,
+				}
+			}
+		);
+        if (!allComments){
             return res.status(400).json({message: 'comments not found'});
         }
-        res.status(200).json({comments});
+        res.status(200).json({
+			comments
+		});
     }catch (error){
         res.status(400).json({message: 'db.Something goes wrong'});
     }

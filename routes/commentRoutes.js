@@ -21,7 +21,7 @@ route.route('/update/:id').put(commentController.updateCommentById);
 route.use(verifyUserID);
 route.route('/delete/:id').delete(commentController.deleteCommentsById);
 
-// get comment by post
+// get comments by post
 route.route('/post/:id').get(commentController.getCommentByPost);
 
 
