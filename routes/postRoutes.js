@@ -12,6 +12,8 @@ route.route('/').get(postController.getAllPosts);
 // get  post by id
 route.route('/:id').get(postController.getPostById);
 
+// get  posts by category
+route.route('/category/:id').get(postController.getPostByCategory);
 
 // create a post
 route.use(verifyUserID);
@@ -25,7 +27,6 @@ route.route('/update/:id').put(postController.updatePostById);
 route.use(verifyUserID);
 route.route('/delete/:id').delete(postController.deletePostById);
 
-// get  posts by category
-route.route('/category/:id').get(postController.getPostByCategory);
+
 
 module.exports = route;

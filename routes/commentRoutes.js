@@ -9,20 +9,18 @@ route.route('/').get(commentController.getAllComments);
 // get comment by id
 route.route('/:id').get(commentController.getCommentById);
 
-// create a comment 
-route.use(verifyUserID);
-route.route('/create').post(commentController.createComment);
-
-// update comment
-route.use(verifyUserID);
-route.route('/update/:id').put(commentController.updateCommentById);
-
-// delete comment
-route.use(verifyUserID);
-route.route('/delete/:id').delete(commentController.deleteCommentsById);
-
 // get comments by post
 route.route('/post/:id').get(commentController.getCommentByPost);
 
+route.use(verifyUserID);
+
+// create a comment
+route.route('/create').post(commentController.createComment);
+
+// update comment
+route.route('/update/:id').put(commentController.updateCommentById);
+
+// delete comment
+route.route('/delete/:id').delete(commentController.deleteCommentsById);
 
 module.exports = route;
