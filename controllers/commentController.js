@@ -34,7 +34,9 @@ const createComment = async (req, res) => {
         res.status(400).json({message: 'Something goes wrong'})
     }
     try{
-        const comment = new Comment({body, author, post});
+        const user = await User.findById(author);
+        const username = user.username;
+        const comment = new Comment({body, username, author, post});
         await comment.save();
         await Post.findByIdAndUpdate(comment.post, {$push: {comments: comment._id}}, {new: true});
         res.status(200).json({message: 'comment added successfully'});
