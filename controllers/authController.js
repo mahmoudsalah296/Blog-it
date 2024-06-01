@@ -3,6 +3,17 @@ const jwt = require('jsonwebtoken')
 
 const User = require("../models/userModel");
 
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    author: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.PASS
+    }
+});
+
+
 const register = async (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
@@ -51,6 +62,19 @@ const register = async (req, res) => {
         // secure: true,
         // sameSite: "None",
         maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+
+    transporter.sendMail( {
+        from: process.env.GMAIL_USER,
+        to: user.email,
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+      },
+      (error, info) => {
+        if(error){
+            console.log(error);
+        }
     });
 
     res.json({
