@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   image: {type: String, require: false, default: "defaultImage.jpg"},
   fileUrl: { type: String, required: false },
+  categoryName: {type: String, require: true},
 }, { timestamps: true });
 
 const Post = mongoose.model('Post', postSchema, 'post');
