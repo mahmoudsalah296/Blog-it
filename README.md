@@ -4,17 +4,16 @@ This repository contains the source code for the backend development of Blog-it,
 
 ## Features:
 
-* Create, edit, and delete blog posts.
-* User accounts for secure access and post ownership.
-* Categorize posts for better organization.
-* Commenting system for user interaction.
-
+- Create, edit, and delete blog posts.
+- User accounts for secure access and post ownership.
+- Categorize posts for better organization.
+- Commenting system for user interaction.
 
 ## Getting Started
 
 **Prerequisites:**
 
-* Node.js and npm (or yarn) installed on your system. You can download them from [https://nodejs.org/en](https://nodejs.org/en)
+- Node.js and npm (or yarn) installed on your system. You can download them from [https://nodejs.org/en](https://nodejs.org/en)
 
 **Installation:**
 
@@ -31,8 +30,8 @@ npm install
 ```bash
 npm start
 ```
-This will typically start the application on port 5000 (http://localhost:5000). You can check the console output for the exact port number.
 
+This will typically start the application on port 5000 (http://localhost:5000). You can check the console output for the exact port number.
 
 **2. (Optional) API Testing:**
 
@@ -48,12 +47,14 @@ You can use a tool like Postman to test the application's APIs. The API document
 API documentation for this project was built using Swagger UI and can be found at the following link: [Swagger API Docs](https://blog-it-zjku.onrender.com/api-docs/).
 
 ## Technologies Used:
-* Node.js: JavaScript runtime environment for server-side development.
-* Express.js: Web framework for building web applications and APIs in Node.js.
-* JWT (JSON Web Token): A secure way to represent claims (like user information) between different parts of an application.
-![MERN Diagram](uploads/mern_diagram.webp)
+
+- Node.js: JavaScript runtime environment for server-side development.
+- Express.js: Web framework for building web applications and APIs in Node.js.
+- JWT (JSON Web Token): A secure way to represent claims (like user information) between different parts of an application.
+  ![MERN Diagram](uploads/mern_diagram.webp)
 
 ## Contributing
+
 Contributions are welcome! If you'd like to contribute to Blog-it, please follow these steps:
 
 1. Fork the repository.
@@ -66,8 +67,9 @@ Contributions are welcome! If you'd like to contribute to Blog-it, please follow
 
 - Ahmed Eid - [GitHub](https://github.com/ahmedeid533)
 - Hamza - [GitHub](https://github.com/hamza-25)
-- Mahmoud Salah - [GitHub](https://github.com/mahmoudsalah296)
+- Mahmoud Salah - [GitHub](https://github.com/mahmoudsalah296) | [LinkedIn](https://www.linkedin.com/in/mahmoudsalah296)
 - Menna Hassan - [GitHub](https://github.com/MennatAllahhxx) | [LinkedIn](https://www.linkedin.com/in/mennatallahhxx/)
 
 ## Future Development
+
 The features mentioned above are subject to change based on development progress and user feedback. Feel free to open issues or suggest enhancements!
