@@ -1,4 +1,5 @@
 const Post = require('../models/postModel')
+const Category = require('../models/categoryModel')
 
 const createPost = async (req, res) => {
     const { title, body, categories, fileUrl} = req.body;
@@ -8,8 +9,9 @@ const createPost = async (req, res) => {
         res.status(400).json({message: 'Something went wrong'})
     }
     try{
-        const post = new Post({ title, body, author, image , categories, fileUrl});
-        // const post = new Post(postData);
+        const category = await Category.findById(categories);
+        const categoryName = category.name;
+        const post = new Post({ title, body, author, image , categories, fileUrl, categoryName});
         await post.save();
         res.status(200).json({message: 'post created successfully'});
     } catch (error){
