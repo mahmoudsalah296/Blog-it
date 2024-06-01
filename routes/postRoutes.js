@@ -2,7 +2,7 @@ const express = require('express');
 
 const postController = require('../controllers/postController');
 const upload = require('../config/uploadImage');
-const verifyUserID = require("../middleware/verifyUserID");
+const verifyUserID = require('../middleware/verifyUserID');
 
 const route = express.Router();
 

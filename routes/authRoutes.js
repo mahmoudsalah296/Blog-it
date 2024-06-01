@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const upload = require('../config/uploadImage');
 
-const authController = require("../controllers/authController");
-const verifyUserID = require("../middleware/verifyUserID");
+const authController = require('../controllers/authController');
+const verifyUserID = require('../middleware/verifyUserID');
 
 const router = express.Router();
 
@@ -54,7 +54,7 @@ const router = express.Router();
  *       400:
  *         description: Error in registration
  */
-router.route("/register").post(upload.single('image'), authController.register);
+router.route('/register').post(upload.single('image'), authController.register);
 
 /**
  * @swagger
@@ -90,7 +90,7 @@ router.route("/register").post(upload.single('image'), authController.register);
  *       400:
  *         description: Error in login
  */
-router.route("/login").post(authController.login);
+router.route('/login').post(authController.login);
 
 router.use(verifyUserID);
 
@@ -123,7 +123,7 @@ router.use(verifyUserID);
  *       400:
  *         description: Error in updating profile
  */
-router.route("/update/me").put(authController.update);
+router.route('/update/me').put(authController.update);
 
 /**
  * @swagger
@@ -139,7 +139,7 @@ router.route("/update/me").put(authController.update);
  *       400:
  *         description: Error in deleting profile
  */
-router.route("/delete/me").delete(authController.deleteProfile);
+router.route('/delete/me').delete(authController.deleteProfile);
 
 /**
  * @swagger
@@ -155,7 +155,7 @@ router.route("/delete/me").delete(authController.deleteProfile);
  *       401:
  *         description: Unauthorized
  */
-router.route("/refresh").get(authController.refresh);
+router.route('/refresh').get(authController.refresh);
 
 /**
  * @swagger
@@ -171,6 +171,6 @@ router.route("/refresh").get(authController.refresh);
  *       204:
  *         description: No content
  */
-router.route("/logout").post(authController.logout);
+router.route('/logout').post(authController.logout);
 
 module.exports = router;

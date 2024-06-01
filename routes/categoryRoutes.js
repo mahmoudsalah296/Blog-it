@@ -1,6 +1,6 @@
 const express = require('express');
 const categoryController = require('../controllers/categoryController');
-const verifyAdmin = require("../middleware/verifyAdmin");
+const verifyAdmin = require('../middleware/verifyAdmin');
 
 const route = express.Router();
 

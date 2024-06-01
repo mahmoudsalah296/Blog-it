@@ -1,6 +1,6 @@
 const express = require('express');
 const commentController = require('../controllers/commentController');
-const verifyUserID = require("../middleware/verifyUserID");
+const verifyUserID = require('../middleware/verifyUserID');
 
 const route = express.Router();
 
