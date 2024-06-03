@@ -46,12 +46,27 @@ const getUserById = async (req, res) => {
 };
 
 const deleteUserById = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   try {
     const userExists = await User.findById(id).select('-password');
     if (!userExists) {
       return res.status(400).json({ message: 'user not found' });
     }
+
+    // Delete user's comments
+    await Comment.deleteMany({ author: id });
+
+    // Find all posts by the user
+    const userPosts = await Post.find({ author: id });
+
+    // Delete all comments of user's posts
+    for (const post of userPosts) {
+      await Comment.deleteMany({ post: post._id });
+    }
+
+    // Delete user's posts
+    await Post.deleteMany({ author: id });
+
     await User.findByIdAndDelete(id);
     res.status(200).json({ message: 'user deleted successfully' });
   } catch (error) {

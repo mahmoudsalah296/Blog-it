@@ -77,6 +77,9 @@ const deletePostById = async (req, res) => {
     }
 
     if (post.author.toString() === req.user) {
+      // Delete all comments associated with this post
+      await Comment.deleteMany({ post: id });
+
       await Post.findByIdAndDelete(id);
       return res.status(200).json({ message: 'post deleted successfully' });
     } else {
