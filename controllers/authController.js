@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel');
+const Post = require('../models/postModel');
+const Comment = require('../models/commentModel');
 
 const nodemailer = require('nodemailer');
 
@@ -173,7 +175,11 @@ const deleteProfile = async (req, res) => {
     if (!userExists) {
       return res.status(400).json({ message: 'user not found' });
     }
+
+    await Comment.deleteMany({ author: id });
+    await Post.deleteMany({ author: id });
     await User.findByIdAndDelete(id);
+
     res.status(200).json({ message: 'user deleted successfully' });
   } catch (error) {
     res.status(400).json({ error });
