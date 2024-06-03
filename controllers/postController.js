@@ -1,4 +1,5 @@
 const Post = require('../models/postModel');
+const Comment = require('../models/commentModel');
 const Category = require('../models/categoryModel');
 
 const createPost = async (req, res) => {
